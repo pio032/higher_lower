@@ -21,6 +21,7 @@ html, body {
 }
 
 .sx img, .dx img {
+    
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -29,6 +30,7 @@ html, body {
 }
 
 .sx, .dx {
+    
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -59,3 +61,80 @@ html, body {
     font-size: 2.2rem;
     pointer-events: none;
 }
+.sx .subtitle, .dx .subtitle {
+    position: absolute;
+    top: 62%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    text-align: center;
+    width: 80%;
+    margin: 0;
+    z-index: 2;
+    color: #fff;
+    font-size: 1.3rem;
+    text-shadow:
+        1px 1px 0 #000,
+        -1px 1px 0 #000,
+        1px -1px 0 #000,
+        -1px -1px 0 #000;
+    -webkit-text-stroke: 0.5px #000;
+    pointer-events: none;
+}
+
+.bordo-default{
+    border: 15px solid rgb(61, 61, 61);
+    box-sizing: border-box;
+    border-radius: 1px;
+    transition: border 0.2s;
+    
+}
+
+
+.bordo-verde {
+    border: 15px solid #2ecc40;
+    box-sizing: border-box;
+    border-radius: 1px;
+    transition: border 0.2s;
+}
+.bordo-rosso {
+    border: 15px solid red;
+    box-sizing: border-box;
+    border-radius: 1px;
+    transition: border 0.2s;
+}
+.feedback {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #222;
+    z-index: 10;
+    border: 4px solid #ccc;
+    transition: border-color 0.2s, color 0.2s;
+    user-select: none;
+}
+
+.feedback.success {
+    background: #2ecc40;
+    border-color: #2ecc40;
+    color: #fff;
+    /* opzionale: aggiungi un'ombra più intensa */
+    box-shadow: 0 2px 16px rgba(46,204,64,0.25);
+}
+.feedback.error {
+    background: #e74c3c;
+    border-color: #e74c3c;
+    color: #fff;
+    box-shadow: 0 2px 16px rgba(231,76,60,0.25);
+}
+

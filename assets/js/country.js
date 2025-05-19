@@ -23,12 +23,71 @@ async function country() {
 }
 
 (async () => {
-    const sx = await country();
-    const dx = await country();
+     sx = await country();
+     dx = await country();
     console.log("sx", sx);
     console.log("dx", dx);
     document.getElementById('imgSx').src = "https://countryflagsapi.netlify.app/flag/" + sx[0].cca2 + ".svg";
     document.getElementById('imgDx').src = "https://countryflagsapi.netlify.app/flag/" + dx[0].cca2 + ".svg";
-    document.getElementById('titleSx').innerText =sx[0].altSpellings[1];
+    document.getElementById('titleSx').innerText =sx[0].name.common;
+    document.getElementById('titleDx').innerText =dx[0].name.common;
+
 
 })();
+
+
+function verifica(){
+    if(sx[0].population>dx[0].population){
+      return true;
+    }else{
+      return false;
+    }
+}
+function leggibile(population){
+    return population.toLocaleString('it-IT');
+}
+
+
+    document.getElementById('sx').classList.add('bordo-default');
+    document.getElementById('dx').classList.add('bordo-default')
+    document.getElementById('risp').innerText="...";
+    document.getElementById('sx').addEventListener("click", function(){
+    document.getElementById('risp').innerText="";
+    document.getElementById('valSx').innerText=leggibile(sx[0].population);
+    document.getElementById('valDx').innerText=leggibile(dx[0].population);
+    if(verifica()){
+        document.getElementById('feedback').classList.add('success')
+        document.getElementById('risp').classList.add('fas', 'fa-check-circle');
+        document.getElementById('sx').classList.add('bordo-verde')
+        document.getElementById('dx').classList.add('bordo-rosso');
+       
+    }else{
+        document.getElementById('feedback').classList.add('error')
+        document.getElementById('risp').classList.add('fas', 'fa-times-circle');
+        document.getElementById('sx').classList.add('bordo-rosso');
+        document.getElementById('dx').classList.add('bordo-verde')
+    }
+    
+})
+
+document.getElementById('dx').addEventListener("click", function(){
+     document.getElementById('risp').innerText="";
+    document.getElementById('valDx').innerText=leggibile(dx[0].population);
+     document.getElementById('valSx').innerText=leggibile(sx[0].population);
+    if(!verifica()){
+       document.getElementById('feedback').classList.add('success')
+       document.getElementById('risp').classList.add('fas', 'fa-check-circle');
+       document.getElementById('dx').classList.add('bordo-verde')
+       document.getElementById('sx').classList.add('bordo-rosso');
+    }else{
+        document.getElementById('feedback').classList.add('error')
+        document.getElementById('risp').classList.add('fas', 'fa-times-circle');
+        document.getElementById('sx').classList.add('bordo-verde')
+        document.getElementById('dx').classList.add('bordo-rosso');
+    }
+})
+
+document.getElementById('sx').classList.remove('bordo-verde');
+document.getElementById('dx').classList.remove('bordo-verde');
+document.getElementById('sx').classList.remove('bordo-rosso');
+document.getElementById('dx').classList.remove('bordo-rosso');
