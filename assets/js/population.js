@@ -64,6 +64,8 @@ function leggibile(population){
 
 //---------------------------------------INIZIALIZZA-CSS-------------------------------------------------------------------------------------
 function init(dx){
+    document.getElementById('dx').style.pointerEvents = 'auto';
+    document.getElementById('sx').style.pointerEvents = 'auto';
      document.getElementById('sx').classList.remove('bordo-verde', 'bordo-rosso', 'bordo-default');
     document.getElementById('dx').classList.remove('bordo-verde', 'bordo-rosso', 'bordo-default');
     document.getElementById('sx').classList.add('bordo-default');
@@ -79,29 +81,40 @@ function init(dx){
 }
 
 
-
-
+//----------------------------------GLOBAL----------------------------------------------------------------------------------------------------
+ let score = 0;
+ let wSx = 0;
+ let wDx = 0;
 
 //--------------------------INIZIALIZZAZIONE-------------------------------------------------------------------------------------------------
-    let score = 0;
+   
     document.getElementById('score').innerText=score;
     document.getElementById('sx').classList.add('bordo-default');
     document.getElementById('dx').classList.add('bordo-default')
     document.getElementById('risp').innerText="...";
     document.getElementById('sx').addEventListener("click", function(){
+    document.getElementById('sx').style.pointerEvents = 'none';
     document.getElementById('risp').innerText="";
     document.getElementById('valSx').innerText=leggibile(sx[0].population);
     document.getElementById('valDx').innerText=leggibile(dx[0].population);
 //--------------------------------------------------------------------------------------------------------------------------------------------
     if(verifica()){
+        console.log("wSx", wSx)
+        wSx++;
         score++;
         document.getElementById('feedback').classList.add('success')
         document.getElementById('risp').classList.add('fas', 'fa-check-circle');
         document.getElementById('sx').classList.add('bordo-verde')
         document.getElementById('dx').classList.add('bordo-rosso');
         document.getElementById('score').innerText=score;
+        if(wSx>1){
+        console.log("genSX")
+        setTimeout(generaSX, 2000);
+        setTimeout(init, 2000, true);
+        wSx=0;
+        }
         setTimeout(generaDX, 2000);
-       setTimeout(init, 2000, false);
+        setTimeout(init, 2000, false);
        
     }else{
         document.getElementById('feedback').classList.add('error')
@@ -113,16 +126,24 @@ function init(dx){
 })
 
 document.getElementById('dx').addEventListener("click", function(){
+     document.getElementById('dx').style.pointerEvents = 'none';
      document.getElementById('risp').innerText="";
     document.getElementById('valDx').innerText=leggibile(dx[0].population);
      document.getElementById('valSx').innerText=leggibile(sx[0].population);
     if(!verifica()){
+        wDx++;
        score++;
        document.getElementById('feedback').classList.add('success')
        document.getElementById('risp').classList.add('fas', 'fa-check-circle');
        document.getElementById('dx').classList.add('bordo-verde')
        document.getElementById('sx').classList.add('bordo-rosso');
        document.getElementById('score').innerText=score;
+       if(wDx>1){
+       console.log("genDX")
+       setTimeout(generaDX, 2000);
+       setTimeout(init, 2000, false);
+       wDx=0;
+       }
        setTimeout(generaSX, 2000);
        setTimeout(init, 2000, true);
        
