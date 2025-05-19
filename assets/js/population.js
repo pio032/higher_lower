@@ -47,7 +47,9 @@ function leggibile(population){
     return population.toLocaleString('it-IT');
 }
 
-
+//--------------------------INIZIALIZZAZIONE-------------------------------------------------------------------------------------------------
+    let score = 0;
+    document.getElementById('score').innerText=score;
     document.getElementById('sx').classList.add('bordo-default');
     document.getElementById('dx').classList.add('bordo-default')
     document.getElementById('risp').innerText="...";
@@ -55,11 +57,14 @@ function leggibile(population){
     document.getElementById('risp').innerText="";
     document.getElementById('valSx').innerText=leggibile(sx[0].population);
     document.getElementById('valDx').innerText=leggibile(dx[0].population);
+//--------------------------------------------------------------------------------------------------------------------------------------------
     if(verifica()){
+        score++;
         document.getElementById('feedback').classList.add('success')
         document.getElementById('risp').classList.add('fas', 'fa-check-circle');
         document.getElementById('sx').classList.add('bordo-verde')
         document.getElementById('dx').classList.add('bordo-rosso');
+        document.getElementById('score').innerText=score;
        
     }else{
         document.getElementById('feedback').classList.add('error')
@@ -75,10 +80,12 @@ document.getElementById('dx').addEventListener("click", function(){
     document.getElementById('valDx').innerText=leggibile(dx[0].population);
      document.getElementById('valSx').innerText=leggibile(sx[0].population);
     if(!verifica()){
+       score++;
        document.getElementById('feedback').classList.add('success')
        document.getElementById('risp').classList.add('fas', 'fa-check-circle');
        document.getElementById('dx').classList.add('bordo-verde')
        document.getElementById('sx').classList.add('bordo-rosso');
+       document.getElementById('score').innerText=score;
     }else{
         document.getElementById('feedback').classList.add('error')
         document.getElementById('risp').classList.add('fas', 'fa-times-circle');
