@@ -160,3 +160,16 @@ html, body {
     text-shadow: 0 2px 8px rgba(42,82,152,0.10);
     transition: color 0.2s, text-shadow 0.2s;
 }
+
+
+.flag-img {
+    opacity: 0;
+    transform: translateX(-40px);
+    transition: opacity 0.5s, transform 0.5s;
+}
+
+
+.flag-img.visible {
+    opacity: 1;
+    transform: translateX(0);
+}

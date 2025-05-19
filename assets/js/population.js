@@ -75,10 +75,9 @@ function init(dx){
     document.getElementById('valSx').innerText = "";
     }else{
     document.getElementById('valDx').innerText = "";
-    }
-   
-   
+    } 
 }
+
 
 
 
