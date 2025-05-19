@@ -175,7 +175,7 @@ html, body {
 }
 
 .errore {
-    display: none; /* Mostra solo quando serve */
+   
     position: fixed;
     top: 50%;
     left: 50%;
