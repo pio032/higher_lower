@@ -87,8 +87,8 @@ function init(dx){
 //-----------------------------------------------------ANIMAZIONE-NUMERI------------------------------------------------------------------------
 
 function animaNumero(element, target, durata = 1000) {
-    const start = 0;
     const end = Number(target);
+    const start = end/2;
     const startTime = performance.now();
 
     function update(currentTime) {
