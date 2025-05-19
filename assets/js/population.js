@@ -1,3 +1,5 @@
+
+//---------------------------------------------------------CODICE-PAESI-RANDOM-------------------------------------------------------------------
 function paese() {
     const v = Math.floor(Math.random() * 249);
     const countryCodes = [
@@ -5,19 +7,19 @@ function paese() {
     ];
     return countryCodes[v];
 }
-
+//---------------------------------------------------------GENERAZIONE-INIZIALE------------------------------------------------------------------
 async function country() {
     const res = paese();
     try {
         const response = await fetch("https://restcountries.com/v3.1/alpha/" + res);
         const result = await response.json();
         if (!Array.isArray(result) || !result[0] || !result[0].cca2) {
-            // Se non è valido, riprova
+          
             return await country();
         }
         return result;
     } catch (error) {
-        // In caso di errore di rete, riprova
+      
         return await country();
     }
 }
@@ -34,6 +36,8 @@ async function country() {
 
 
 })();
+
+//---------------------------------------------------GENERA-SX-DX-----------------------------------------------------------------------
 
 async function generaSX(){
      sx = await country();
@@ -80,6 +84,27 @@ function init(dx){
     } 
 }
 
+//-----------------------------------------------------ANIMAZIONE-NUMERI------------------------------------------------------------------------
+
+function animaNumero(element, target, durata = 1000) {
+    const start = 0;
+    const end = Number(target);
+    const startTime = performance.now();
+
+    function update(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / durata, 1);
+        const value = Math.floor(progress * (end - start) + start);
+        element.innerText = value.toLocaleString('it-IT');
+        if (progress < 1) {
+            requestAnimationFrame(update);
+        } else {
+            element.innerText = end.toLocaleString('it-IT');
+        }
+    }
+    requestAnimationFrame(update);
+}
+
 
 //----------------------------------GLOBAL----------------------------------------------------------------------------------------------------
  let score = 0;
@@ -95,8 +120,14 @@ function init(dx){
     document.getElementById('sx').addEventListener("click", function(){
     document.getElementById('sx').style.pointerEvents = 'none';
     document.getElementById('risp').innerText="";
-    document.getElementById('valSx').innerText=leggibile(sx[0].population);
-    document.getElementById('valDx').innerText=leggibile(dx[0].population);
+   // document.getElementById('valSx').innerText=leggibile(sx[0].population);
+   // document.getElementById('valDx').innerText=leggibile(dx[0].population);
+   if(wSx==0){
+    animaNumero(document.getElementById('valSx'), sx[0].population);
+   }
+   if(wDx==0){
+    animaNumero(document.getElementById('valDx'), dx[0].population);
+    }
 //--------------------------------------------------------------------------------------------------------------------------------------------
     if(verifica()){
         console.log("wSx", wSx)
@@ -108,11 +139,12 @@ function init(dx){
         document.getElementById('dx').classList.add('bordo-rosso');
         document.getElementById('score').innerText=score;
         if(wSx>1){
-        console.log("genSX")
+       
         setTimeout(generaSX, 2000);
         setTimeout(init, 2000, true);
         wSx=0;
         }
+        wDx=0;
         setTimeout(generaDX, 2000);
         setTimeout(init, 2000, false);
        
@@ -129,9 +161,19 @@ function init(dx){
 document.getElementById('dx').addEventListener("click", function(){
      document.getElementById('dx').style.pointerEvents = 'none';
      document.getElementById('risp').innerText="";
-    document.getElementById('valDx').innerText=leggibile(dx[0].population);
-     document.getElementById('valSx').innerText=leggibile(sx[0].population);
+
+   // document.getElementById('valDx').innerText=leggibile(dx[0].population);
+    // document.getElementById('valSx').innerText=leggibile(sx[0].population);
+    if(wDx==0){
+    animaNumero(document.getElementById('valDx'), dx[0].population);
+    }
+    if(wSx==0){
+     animaNumero(document.getElementById('valSx'), sx[0].population);
+    }
+   
+    
     if(!verifica()){
+        console.log("wDx", wDx)
         wDx++;
        score++;
        document.getElementById('feedback').classList.add('success')
@@ -140,11 +182,12 @@ document.getElementById('dx').addEventListener("click", function(){
        document.getElementById('sx').classList.add('bordo-rosso');
        document.getElementById('score').innerText=score;
        if(wDx>1){
-       console.log("genDX")
+       
        setTimeout(generaDX, 2000);
        setTimeout(init, 2000, false);
        wDx=0;
        }
+       wSx=0;
        setTimeout(generaSX, 2000);
        setTimeout(init, 2000, true);
        
