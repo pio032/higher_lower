@@ -107,6 +107,8 @@ function animaNumero(element, target, durata = 1000) {
 
 
 //----------------------------------GLOBAL----------------------------------------------------------------------------------------------------
+ const win = localStorage.getItem('win');
+ console.log("localStorage", win)
  let score = 0;
  let wSx = 0;
  let wDx = 0;
@@ -153,7 +155,8 @@ function animaNumero(element, target, durata = 1000) {
         document.getElementById('risp').classList.add('fas', 'fa-times-circle');
         document.getElementById('sx').classList.add('bordo-rosso');
         document.getElementById('dx').classList.add('bordo-verde')
-         document.getElementById('errore').style.display='block'
+         //document.getElementById('errore').style.display='block'
+         perdita();
     }
     
 })
@@ -197,7 +200,8 @@ document.getElementById('dx').addEventListener("click", function(){
         document.getElementById('risp').classList.add('fas', 'fa-times-circle');
         document.getElementById('sx').classList.add('bordo-verde')
         document.getElementById('dx').classList.add('bordo-rosso');
-        document.getElementById('errore').style.display='block'
+        //document.getElementById('errore').style.display='block'
+        perdita();
     }
 })
 
@@ -205,6 +209,20 @@ document.getElementById('sx').classList.remove('bordo-verde');
 document.getElementById('dx').classList.remove('bordo-verde');
 document.getElementById('sx').classList.remove('bordo-rosso');
 document.getElementById('dx').classList.remove('bordo-rosso');
+
+//----------------------------------------PERSO--------------------------------------------------------------------------------
+
+function perdita(){
+     document.getElementById('errore').style.display='block'
+     document.getElementById('attuale').innerText="hai totalizzato: "+score
+     if(win && win>score){
+        document.getElementById('local').innerText="il tuo record è: "+win
+     }else{
+        localStorage.setItem('win', score)
+        document.getElementById('local').innerText="il tuo record è: "+ localStorage.getItem('win')
+     }
+}
+
 
 
 //------------------------------------TORNA-ALLA-HOME--------------------------------------------------------------------------
