@@ -27,8 +27,6 @@ async function country() {
 (async () => {
      sx = await country();
      dx = await country();
-    console.log("sx", sx);
-    console.log("dx", dx);
     document.getElementById('imgSx').src = "https://countryflagsapi.netlify.app/flag/" + sx[0].cca2 + ".svg";
     document.getElementById('imgDx').src = "https://countryflagsapi.netlify.app/flag/" + dx[0].cca2 + ".svg";
     document.getElementById('titleSx').innerText =sx[0].name.common;
@@ -41,14 +39,12 @@ async function country() {
 
 async function generaSX(){
      sx = await country();
-    console.log("sx", sx);
     document.getElementById('imgSx').src = "https://countryflagsapi.netlify.app/flag/" + sx[0].cca2 + ".svg";
     document.getElementById('titleSx').innerText =sx[0].name.common;
     
 }
 async function generaDX(){
      dx = await country();
-    console.log("dx", dx);
     document.getElementById('imgDx').src = "https://countryflagsapi.netlify.app/flag/" + dx[0].cca2 + ".svg";
     document.getElementById('titleDx').innerText =dx[0].name.common;
 }
@@ -108,7 +104,6 @@ function animaNumero(element, target, durata = 1000) {
 
 //----------------------------------GLOBAL----------------------------------------------------------------------------------------------------
  const win = localStorage.getItem('win');
- console.log("localStorage", win)
  let score = 0;
  let wSx = 0;
  let wDx = 0;
@@ -122,8 +117,6 @@ function animaNumero(element, target, durata = 1000) {
     document.getElementById('sx').addEventListener("click", function(){
     document.getElementById('sx').style.pointerEvents = 'none';
     document.getElementById('risp').innerText="";
-   // document.getElementById('valSx').innerText=leggibile(sx[0].population);
-   // document.getElementById('valDx').innerText=leggibile(dx[0].population);
    if(wSx==0){
     animaNumero(document.getElementById('valSx'), sx[0].population);
    }
@@ -132,7 +125,7 @@ function animaNumero(element, target, durata = 1000) {
     }
 //--------------------------------------------------------------------------------------------------------------------------------------------
     if(verifica()){
-        console.log("wSx", wSx)
+        
         wSx++;
         score++;
         document.getElementById('feedback').classList.add('success')
@@ -155,7 +148,6 @@ function animaNumero(element, target, durata = 1000) {
         document.getElementById('risp').classList.add('fas', 'fa-times-circle');
         document.getElementById('sx').classList.add('bordo-rosso');
         document.getElementById('dx').classList.add('bordo-verde')
-         //document.getElementById('errore').style.display='block'
          perdita();
     }
     
@@ -164,9 +156,6 @@ function animaNumero(element, target, durata = 1000) {
 document.getElementById('dx').addEventListener("click", function(){
      document.getElementById('dx').style.pointerEvents = 'none';
      document.getElementById('risp').innerText="";
-
-   // document.getElementById('valDx').innerText=leggibile(dx[0].population);
-    // document.getElementById('valSx').innerText=leggibile(sx[0].population);
     if(wDx==0){
     animaNumero(document.getElementById('valDx'), dx[0].population);
     }
@@ -176,7 +165,7 @@ document.getElementById('dx').addEventListener("click", function(){
    
     
     if(!verifica()){
-        console.log("wDx", wDx)
+       
         wDx++;
        score++;
        document.getElementById('feedback').classList.add('success')
@@ -200,7 +189,6 @@ document.getElementById('dx').addEventListener("click", function(){
         document.getElementById('risp').classList.add('fas', 'fa-times-circle');
         document.getElementById('sx').classList.add('bordo-verde')
         document.getElementById('dx').classList.add('bordo-rosso');
-        //document.getElementById('errore').style.display='block'
         perdita();
     }
 })
