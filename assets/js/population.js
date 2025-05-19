@@ -35,6 +35,21 @@ async function country() {
 
 })();
 
+async function generaSX(){
+     sx = await country();
+    console.log("sx", sx);
+    document.getElementById('imgSx').src = "https://countryflagsapi.netlify.app/flag/" + sx[0].cca2 + ".svg";
+    document.getElementById('titleSx').innerText =sx[0].name.common;
+    
+}
+async function generaDX(){
+     dx = await country();
+    console.log("dx", dx);
+    document.getElementById('imgDx').src = "https://countryflagsapi.netlify.app/flag/" + dx[0].cca2 + ".svg";
+    document.getElementById('titleDx').innerText =dx[0].name.common;
+}
+
+
 
 function verifica(){
     if(sx[0].population>dx[0].population){
@@ -46,6 +61,27 @@ function verifica(){
 function leggibile(population){
     return population.toLocaleString('it-IT');
 }
+
+//---------------------------------------INIZIALIZZA-CSS-------------------------------------------------------------------------------------
+function init(dx){
+     document.getElementById('sx').classList.remove('bordo-verde', 'bordo-rosso', 'bordo-default');
+    document.getElementById('dx').classList.remove('bordo-verde', 'bordo-rosso', 'bordo-default');
+    document.getElementById('sx').classList.add('bordo-default');
+    document.getElementById('dx').classList.add('bordo-default')
+    document.getElementById('feedback').classList.remove('success', 'error');
+    document.getElementById('risp').className = '';
+    document.getElementById('risp').innerText = "...";
+    if(dx){
+    document.getElementById('valSx').innerText = "";
+    }else{
+    document.getElementById('valDx').innerText = "";
+    }
+   
+   
+}
+
+
+
 
 //--------------------------INIZIALIZZAZIONE-------------------------------------------------------------------------------------------------
     let score = 0;
@@ -65,6 +101,8 @@ function leggibile(population){
         document.getElementById('sx').classList.add('bordo-verde')
         document.getElementById('dx').classList.add('bordo-rosso');
         document.getElementById('score').innerText=score;
+        setTimeout(generaDX, 2000);
+       setTimeout(init, 2000, false);
        
     }else{
         document.getElementById('feedback').classList.add('error')
@@ -86,6 +124,10 @@ document.getElementById('dx').addEventListener("click", function(){
        document.getElementById('dx').classList.add('bordo-verde')
        document.getElementById('sx').classList.add('bordo-rosso');
        document.getElementById('score').innerText=score;
+       setTimeout(generaSX, 2000);
+       setTimeout(init, 2000, true);
+       
+
     }else{
         document.getElementById('feedback').classList.add('error')
         document.getElementById('risp').classList.add('fas', 'fa-times-circle');
