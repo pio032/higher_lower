@@ -173,3 +173,49 @@ html, body {
     opacity: 1;
     transform: translateX(0);
 }
+
+.errore {
+    display: none; /* Mostra solo quando serve */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 320px;
+    max-width: 90vw;
+    background: #e74c3c;
+    color: #fff;
+    padding: 36px 32px 28px 32px;
+    border-radius: 18px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+    z-index: 9999;
+    text-align: center;
+    animation: popupIn 0.4s cubic-bezier(.68,-0.55,.27,1.55);
+}
+@keyframes popupIn {
+    0% { transform: translate(-50%, -60%) scale(0.8); opacity: 0; }
+    100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+.errore h1 {
+    margin: 0 0 18px 0;
+    font-size: 2rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+.errore button {
+    background: #fff;
+    color: #e74c3c;
+    border: none;
+    border-radius: 24px;
+    padding: 12px 32px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transition: background 0.2s, color 0.2s;
+}
+.errore button:hover {
+    background: #e74c3c;
+    color: #fff;
+    border: 2px solid #fff;
+}

@@ -87,7 +87,7 @@ function init(dx){
  let wDx = 0;
 
 //--------------------------INIZIALIZZAZIONE-------------------------------------------------------------------------------------------------
-   
+    document.getElementById('errore').style.display='none'
     document.getElementById('score').innerText=score;
     document.getElementById('sx').classList.add('bordo-default');
     document.getElementById('dx').classList.add('bordo-default')
@@ -121,6 +121,7 @@ function init(dx){
         document.getElementById('risp').classList.add('fas', 'fa-times-circle');
         document.getElementById('sx').classList.add('bordo-rosso');
         document.getElementById('dx').classList.add('bordo-verde')
+         document.getElementById('errore').style.display='block'
     }
     
 })
@@ -153,6 +154,7 @@ document.getElementById('dx').addEventListener("click", function(){
         document.getElementById('risp').classList.add('fas', 'fa-times-circle');
         document.getElementById('sx').classList.add('bordo-verde')
         document.getElementById('dx').classList.add('bordo-rosso');
+        document.getElementById('errore').style.display='block'
     }
 })
 
@@ -160,3 +162,9 @@ document.getElementById('sx').classList.remove('bordo-verde');
 document.getElementById('dx').classList.remove('bordo-verde');
 document.getElementById('sx').classList.remove('bordo-rosso');
 document.getElementById('dx').classList.remove('bordo-rosso');
+
+
+//------------------------------------TORNA-ALLA-HOME--------------------------------------------------------------------------
+document.getElementById('home').addEventListener("click", function(){
+    window.location.href = "/index.html"
+})
