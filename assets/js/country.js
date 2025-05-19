@@ -85,7 +85,7 @@ async function generaDX(){
 
 
 function verifica(){
-    if(sx[0].area>dx[0].area){
+    if(sx[0].area>=dx[0].area){
       return true;
     }else{
       return false;

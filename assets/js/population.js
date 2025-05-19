@@ -63,7 +63,7 @@ async function generaDX(){
 
 
 function verifica(){
-    if(sx[0].population>dx[0].population){
+    if(sx[0].population>=dx[0].population){
       return true;
     }else{
       return false;
