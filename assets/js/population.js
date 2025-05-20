@@ -38,6 +38,8 @@ let dx = [];
 
 //---------------------------------------------------GENERA-SX-DX-----------------------------------------------------------------------
 
+let isTransitioning = false;
+
 async function generaSX(){
     try{
         const response = await fetch("https://restcountries.com/v3.1/all");
@@ -155,18 +157,20 @@ function animaNumero(element, target, durata = 1000) {
 
 //----------------------------------------------------------------------------------------------------------------------------------------------
 
-    document.getElementById('sx').addEventListener("click", function(){
+    
+   document.getElementById('sx').addEventListener("click", function(){
+    if (isTransitioning) return; // BLOCCA SE IN TRANSIZIONE
+    isTransitioning = true;
     document.getElementById('sx').style.pointerEvents = 'none';
     document.getElementById('risp').innerText="";
-   if(wSx==0){
-    animaNumero(document.getElementById('valSx'), sx[0].population);
-   }
-   if(wDx==0){
-    animaNumero(document.getElementById('valDx'), dx[0].population);
+    if(wSx==0){
+        animaNumero(document.getElementById('valSx'), sx[0].population);
+    }
+    if(wDx==0){
+        animaNumero(document.getElementById('valDx'), dx[0].population);
     }
 
     if(verifica()){
-        
         wSx++;
         score++;
         document.getElementById('feedback').classList.add('success')
@@ -175,62 +179,72 @@ function animaNumero(element, target, durata = 1000) {
         document.getElementById('dx').classList.add('bordo-rosso');
         document.getElementById('score').innerText=score;
         if(wSx>1){
-       
-        setTimeout(generaSX, 2000);
-        setTimeout(init, 2000, true);
-        wSx=0;
+            setTimeout(() => {
+                generaSX();
+                init(true);
+                wSx=0;
+                isTransitioning = false;
+            }, 2000);
+        } else {
+            wDx=0;
+            setTimeout(() => {
+                generaDX();
+                init(false);
+                isTransitioning = false;
+            }, 2000);
         }
-        wDx=0;
-        setTimeout(generaDX, 2000);
-        setTimeout(init, 2000, false);
-       
     }else{
         document.getElementById('feedback').classList.add('error')
         document.getElementById('risp').classList.add('fas', 'fa-times-circle');
         document.getElementById('sx').classList.add('bordo-rosso');
         document.getElementById('dx').classList.add('bordo-verde')
-         perdita();
+        perdita();
+        isTransitioning = false;
     }
-    
 })
 
 document.getElementById('dx').addEventListener("click", function(){
-     document.getElementById('dx').style.pointerEvents = 'none';
-     document.getElementById('risp').innerText="";
+      if (isTransitioning) return; // BLOCCA SE IN TRANSIZIONE
+    isTransitioning = true;
+    document.getElementById('dx').style.pointerEvents = 'none';
+    document.getElementById('risp').innerText="";
     if(wDx==0){
-    animaNumero(document.getElementById('valDx'), dx[0].population);
+        animaNumero(document.getElementById('valDx'), dx[0].population);
     }
     if(wSx==0){
-     animaNumero(document.getElementById('valSx'), sx[0].population);
+        animaNumero(document.getElementById('valSx'), sx[0].population);
     }
-   
-    
-    if(!verifica()){
-       
-        wDx++;
-       score++;
-       document.getElementById('feedback').classList.add('success')
-       document.getElementById('risp').classList.add('fas', 'fa-check-circle');
-       document.getElementById('dx').classList.add('bordo-verde')
-       document.getElementById('sx').classList.add('bordo-rosso');
-       document.getElementById('score').innerText=score;
-       if(wDx>1){
-       
-       setTimeout(generaDX, 2000);
-       setTimeout(init, 2000, false);
-       wDx=0;
-       }
-       wSx=0;
-       setTimeout(generaSX, 2000);
-       setTimeout(init, 2000, true);
-       
 
+    if(!verifica()){
+        wDx++;
+        score++;
+        document.getElementById('feedback').classList.add('success')
+        document.getElementById('risp').classList.add('fas', 'fa-check-circle');
+        document.getElementById('dx').classList.add('bordo-verde')
+        document.getElementById('sx').classList.add('bordo-rosso');
+        document.getElementById('score').innerText=score;
+        if(wDx>1){
+            setTimeout(() => {
+                generaDX();
+                init(false);
+                wDx=0;
+                isTransitioning = false;
+            }, 2000);
+        } else {
+            wSx=0;
+            setTimeout(() => {
+                generaSX();
+                init(true);
+                isTransitioning = false;
+            }, 2000);
+        }
     }else{
         document.getElementById('feedback').classList.add('error')
         document.getElementById('risp').classList.add('fas', 'fa-times-circle');
         document.getElementById('sx').classList.add('bordo-verde')
         document.getElementById('dx').classList.add('bordo-rosso');
         perdita();
+        isTransitioning = false;
     }
 })
 

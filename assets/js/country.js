@@ -157,7 +157,12 @@ document.getElementById('dx').classList.add('bordo-default');
 document.getElementById('risp').innerText = "...";
 
 //---------------------------------------------------CLICK-DX-SX-----------------------------------------------------------------------------
+let isTransitioning = false;
+
+
 document.getElementById('dx').addEventListener("click", function() {
+    if (isTransitioning) return; // BLOCCA SE IN TRANSIZIONE
+    isTransitioning = true;
     document.getElementById('dx').style.pointerEvents = 'none';
     document.getElementById('risp').innerText = "";
     
@@ -178,23 +183,33 @@ document.getElementById('dx').addEventListener("click", function() {
         document.getElementById('score').innerText = score;
         
         if (wDx > 1) {
-            setTimeout(() => generaDX(), 2000);
-            setTimeout(() => init(false), 2000);
-            wDx = 0;
+            setTimeout(() => {
+                generaDX();
+                init(false);
+                wDx = 0;
+                isTransitioning = false;
+            }, 2000);
+        } else {
+            wSx = 0;
+            setTimeout(() => {
+                generaSX();
+                init(true);
+                isTransitioning = false;
+            }, 2000);
         }
-        wSx = 0;
-        setTimeout(() => generaSX(), 2000);
-        setTimeout(() => init(true), 2000);
     } else {
         document.getElementById('feedback').classList.add('error');
         document.getElementById('risp').classList.add('fas', 'fa-times-circle');
         document.getElementById('sx').classList.add('bordo-verde');
         document.getElementById('dx').classList.add('bordo-rosso');
         perdita();
+        isTransitioning = false;
     }
 });
 
 document.getElementById('sx').addEventListener("click", function() {
+    if (isTransitioning) return; // BLOCCA SE IN TRANSIZIONE
+    isTransitioning = true;
     document.getElementById('sx').style.pointerEvents = 'none';
     document.getElementById('risp').innerText = "";
     
@@ -215,19 +230,27 @@ document.getElementById('sx').addEventListener("click", function() {
         document.getElementById('score').innerText = score;
         
         if (wSx > 1) {
-            setTimeout(() => generaSX(), 2000);
-            setTimeout(() => init(true), 2000);
-            wSx = 0;
+            setTimeout(() => {
+                generaSX();
+                init(true);
+                wSx = 0;
+                isTransitioning = false;
+            }, 2000);
+        } else {
+            wDx = 0;
+            setTimeout(() => {
+                generaDX();
+                init(false);
+                isTransitioning = false;
+            }, 2000);
         }
-        wDx = 0;
-        setTimeout(() => generaDX(), 2000);
-        setTimeout(() => init(false), 2000);
     } else {
         document.getElementById('feedback').classList.add('error');
         document.getElementById('risp').classList.add('fas', 'fa-times-circle');
         document.getElementById('sx').classList.add('bordo-rosso');
         document.getElementById('dx').classList.add('bordo-verde');
         perdita();
+        isTransitioning = false;
     }
 });
 
