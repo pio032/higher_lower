@@ -318,3 +318,11 @@ body:hover::before {
 button:hover {
     animation: pulse 0.6s ease-in-out;
 }
+
+.super-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px; /* spazio tra i container */
+    min-height: 60vh; /* o quanto vuoi */
+}
