@@ -19,6 +19,7 @@ async function paese() {
 
 //------------------------------------------------------SX_DX_GLOBAL-----------------------------------------------------------------------
 let sx, dx;
+lastSign = 1;
 //-----------------------------------------------------VERIFICA----------------------------------------------------------------------------
 
 function verifica(){
@@ -75,29 +76,27 @@ function verifica(){
 
 //---------------------------------------------------------GENERA---------------------------------------------------------------------------
 async function generaSX() {
-     try {
+   try {
         const response = await fetch("https://restcountries.com/v3.1/all");
         const data = await response.json();
         data.sort((a, b) => a.area - b.area);
 
-        // Trova l'indice attuale di dx
         const dxIndex = data.findIndex(c => c.cca3 === dx[0].cca3);
 
-        // Imposta il salto in base alla difficoltà
         let saltoMin = 1, saltoMax = 10;
         const dif = localStorage.getItem('dif');
         if (dif == 1) { saltoMin = 60; saltoMax = 100; }
         else if (dif == 2) { saltoMin = 20; saltoMax = 40; }
 
-        let newIndex;
-        do {
-            const salto = Math.floor(Math.random() * (saltoMax - saltoMin + 1)) + saltoMin;
-            newIndex = dxIndex + (Math.random() < 0.5 ? -salto : salto);
-        } while (
-            newIndex < 0 ||
-            newIndex >= data.length ||
-            newIndex === dxIndex
-        );
+        let salto = Math.floor(Math.random() * (saltoMax - saltoMin + 1)) + saltoMin;
+        lastSign = -lastSign; 
+        salto = salto * lastSign;
+
+        let newIndex = dxIndex + salto;
+
+        if (newIndex < 0) newIndex = 0;
+        if (newIndex >= data.length) newIndex = data.length - 1;
+        if (newIndex === dxIndex) newIndex = (newIndex + 1 < data.length) ? newIndex + 1 : newIndex - 1;
 
         sx = [data[newIndex]];
 
@@ -114,7 +113,7 @@ async function generaSX() {
 }
 
 async function generaDX() {
-      try {
+    try {
         const response = await fetch("https://restcountries.com/v3.1/all");
         const data = await response.json();
         data.sort((a, b) => a.area - b.area);
@@ -126,15 +125,15 @@ async function generaDX() {
         if (dif == 1) { saltoMin = 60; saltoMax = 100; }
         else if (dif == 2) { saltoMin = 20; saltoMax = 40; }
 
-        let newIndex;
-        do {
-            const salto = Math.floor(Math.random() * (saltoMax - saltoMin + 1)) + saltoMin;
-            newIndex = sxIndex + (Math.random() < 0.5 ? -salto : salto);
-        } while (
-            newIndex < 0 ||
-            newIndex >= data.length ||
-            newIndex === sxIndex
-        );
+        let salto = Math.floor(Math.random() * (saltoMax - saltoMin + 1)) + saltoMin;
+        lastSign = -lastSign; 
+        salto = salto * lastSign;
+
+        let newIndex = sxIndex + salto;
+
+        if (newIndex < 0) newIndex = 0;
+        if (newIndex >= data.length) newIndex = data.length - 1;
+        if (newIndex === sxIndex) newIndex = (newIndex + 1 < data.length) ? newIndex + 1 : newIndex - 1;
 
         dx = [data[newIndex]];
 

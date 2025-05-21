@@ -21,6 +21,7 @@ let nuSX=0;
 let nuDx=0;
 let sx = [];
 let dx = [];
+lastSign = 1;
 //---------------------------------------------------------GENERAZIONE-INIZIALE------------------------------------------------------------------
 
 
@@ -51,22 +52,29 @@ let dx = [];
 let isTransitioning = false;
 
 async function generaSX(){
-    try{
+   try{
         const response = await fetch("https://restcountries.com/v3.1/all");
         const data = await response.json();
         data.sort((a, b) => a.area - b.area);
-        let maxDiff = 10;
-        if(localStorage.getItem('dif')==1){
-            maxDiff = 80;
-        } else if(localStorage.getItem('dif')==2){
-            maxDiff = 30;
-        }
-        let other;
-        do {
-            other = nuDx + Math.floor(Math.random() * maxDiff) + 1;
-        } while (other >= data.length || other === nuDx);
-        sx = [data[other]];
-        nuSX = other;
+
+        let dxIndex = nuDx;
+        let saltoMin = 1, saltoMax = 10;
+        const dif = localStorage.getItem('dif');
+        if(dif == 1){ saltoMin = 60; saltoMax = 100; }
+        else if(dif == 2){ saltoMin = 20; saltoMax = 40; }
+
+        let salto = Math.floor(Math.random() * (saltoMax - saltoMin + 1)) + saltoMin;
+       
+        lastSign = -lastSign;
+        salto = salto * lastSign;
+
+        let newIndex = dxIndex + salto;
+        if(newIndex < 0) newIndex = 0;
+        if(newIndex >= data.length) newIndex = data.length - 1;
+        if(newIndex === dxIndex) newIndex = (newIndex + 1 < data.length) ? newIndex + 1 : newIndex - 1;
+
+        sx = [data[newIndex]];
+        nuSX = newIndex;
         document.getElementById('imgSx').src = "https://countryflagsapi.netlify.app/flag/" + sx[0].cca2 + ".svg";
         document.getElementById('titleSx').innerText = sx[0].name.common;
     }catch(error){
@@ -76,22 +84,29 @@ async function generaSX(){
 }
 
 async function generaDX(){
-    try {
+     try {
         const response = await fetch("https://restcountries.com/v3.1/all");
         const data = await response.json();
         data.sort((a, b) => a.area - b.area);
-        let maxDiff = 10;
-        if(localStorage.getItem('dif')==1){
-            maxDiff = 80;
-        } else if(localStorage.getItem('dif')==2){
-            maxDiff = 30;
-        }
-        let other;
-        do {
-            other = nuSX + Math.floor(Math.random() * maxDiff) + 1;
-        } while (other >= data.length || other === nuSX);
-        dx = [data[other]];
-        nuDx = other;
+
+        let sxIndex = nuSX;
+        let saltoMin = 1, saltoMax = 10;
+        const dif = localStorage.getItem('dif');
+        if(dif == 1){ saltoMin = 60; saltoMax = 100; }
+        else if(dif == 2){ saltoMin = 20; saltoMax = 40; }
+
+        let salto = Math.floor(Math.random() * (saltoMax - saltoMin + 1)) + saltoMin;
+        
+        lastSign = -lastSign;
+        salto = salto * lastSign;
+
+        let newIndex = sxIndex + salto;
+        if(newIndex < 0) newIndex = 0;
+        if(newIndex >= data.length) newIndex = data.length - 1;
+        if(newIndex === sxIndex) newIndex = (newIndex + 1 < data.length) ? newIndex + 1 : newIndex - 1;
+
+        dx = [data[newIndex]];
+        nuDx = newIndex;
         document.getElementById('imgDx').src = "https://countryflagsapi.netlify.app/flag/" + dx[0].cca2 + ".svg";
         document.getElementById('titleDx').innerText = dx[0].name.common;
     } catch (error) {
