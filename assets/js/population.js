@@ -25,7 +25,17 @@ let dx = [];
 
 
 (async () => {
-    const [sxResult, dxResult] = await paese();
+    let sxResult, dxResult;
+    if(localStorage.getItem('dif')<3){
+         do {
+        [sxResult, dxResult] = await paese();
+    } while (sxResult[0].population < 1000000 && dxResult[0].population < 1000000);
+    }else{
+         [sxResult, dxResult] = await paese();
+    }
+   
+
+    
     // Corretto: sxResult[0] e dxResult[0]
     console.log(sxResult[0].ccn3+" "+dxResult[0].ccn3)
     sx = sxResult;
@@ -256,7 +266,8 @@ document.getElementById('dx').classList.remove('bordo-rosso');
 //----------------------------------------PERSO--------------------------------------------------------------------------------
 
 function perdita(){
-     document.getElementById('errore').style.display='block'
+     setTimeout(()=>{
+        document.getElementById('errore').style.display='block'
      document.getElementById('attuale').innerText="Hai totalizzato: "+score
      if(win && win>score){
         document.getElementById('local').innerText="Il tuo record è: "+win
@@ -264,6 +275,7 @@ function perdita(){
         localStorage.setItem('win', score)
         document.getElementById('local').innerText="Il tuo record è: "+ localStorage.getItem('win')
      }
+     }, 1500)
 }
 
 

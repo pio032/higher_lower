@@ -35,8 +35,15 @@ function verifica(){
 //--------------------------------------------------DEFAULT---------------------------------------------------------------------------------
 (async () => {
     try {
-        const [sxResult, dxResult] = await paese();
-        console.log(sxResult.ccn3+" "+dxResult.ccn3)
+        
+        let sxResult, dxResult;
+    if(localStorage.getItem('dif')<3){
+         do {
+        [sxResult, dxResult] = await paese();
+    } while (sxResult[0].population < 1000000 && dxResult[0].population < 1000000);
+    }else{
+         [sxResult, dxResult] = await paese();
+    }
         sx = sxResult;
         dx = dxResult;
         console.log("sx", sx);
@@ -295,7 +302,8 @@ function init(dx) {
 
 //----------------------------------------PERSO--------------------------------------------------------------------------------
 function perdita() {
-    document.getElementById('errore').style.display = 'block';
+    setTimeout(()=>{
+        document.getElementById('errore').style.display = 'block';
     document.getElementById('attuale').innerText = "Hai totalizzato: " + score;
     
     if (win && parseInt(win) > score) {
@@ -304,8 +312,9 @@ function perdita() {
         localStorage.setItem('winC', score.toString());
         document.getElementById('local').innerText = "Il tuo record è: " + localStorage.getItem('winC');
     }
-}
 
+    }, 1500)
+    }
 //------------------------------------TORNA-ALLA-HOME--------------------------------------------------------------------------
 document.getElementById('home').addEventListener("click", function() {
     window.location.href = "/index.html";
