@@ -54,18 +54,5 @@
 
 1. Clona o scarica il progetto.
 2. Apri `index.html` nel browser.
-3. Divertiti a giocare!
 
----
-
-## Contatti
-
-Per domande o suggerimenti, contatta:  
-**[Il tuo nome o email]**
-
----
-
-## Licenza
-
-[Inserisci qui eventuale licenza, es. MIT License]
 
